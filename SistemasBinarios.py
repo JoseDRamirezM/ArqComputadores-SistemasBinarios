@@ -43,6 +43,7 @@ def hexa_a_decimal(num):
 
 
 def decimal_a_base(num, base):
+    num = int(num)
     numero = ''
     aux = 0
     while(num != 0):  
@@ -65,11 +66,13 @@ def decimal_a_base(num, base):
     return numero
 
 
-def binario_a_base(num, base):           
+def binario_a_base(num, base): 
+    num = int(num)          
     numeroAux = binario_a_decimal(num)
     return decimal_a_base(numeroAux, base) 
 
 def octal_a_base(num, base):
+    num = int(num) 
     numeroAux = octal_a_decimal(num)
     return decimal_a_base(numeroAux, base)
 
@@ -77,11 +80,45 @@ def hexa_a_base(num, base):
     numeroAux = hexa_a_decimal(num)
     return decimal_a_base(numeroAux, base)
 
-n = input()
-print(hexa_a_base(n, 10))
-print(hexa_a_base(n, 8))
-print(hexa_a_base(n, 16))
-print(hexa_a_base(n, 2))
+if __name__ == '__main__':
+    bases = {'decimal' : 10, 'hexadecimal': 16, 'Octal' : 8, 'binario' : 2}
+    opciones = ['1','2','3','4','5']
+    msg = list('Sistemas binarios')
+    while(True):
+        print(' '.join(msg).upper())
+        opcion = input('''Seleccione una opcion:
+            [1] Octal a base n
+            [2] Decimal a base n
+            [3] Hexadecimal a base n
+            [4] Binario a base n
+            [5] Salir
+            
+        ''')
+        if opcion in opciones:
+            if opcion == '5':
+                break
+                
+            base = 0
+            while(base not in bases.values()):
+                base = int(input('Base a convertir (2, 8, 10, 16): '))
+                
+            for key, value in bases.items():
+                if value == base:
+                    print('Conversion a ' + key)
+                    break;
+            
+            n = input('Escriba el numero: ').upper()
 
-
+            if opcion == '1':
+                print(f'{n} en base 8 = {octal_a_base(n, base)} en base {base}')
+            elif opcion == '2':
+                print(f'{n} en base 10 = {decimal_a_base(n, base)} en base {base}')
+            elif opcion == '3':
+                print(f'{n} en base 16 = {hexa_a_base(n, base)} en base {base}')
+            elif opcion == '4':
+                print(f'{n} en base 2 = {binario_a_base(n, base)} en base {base}')
+        else:
+            print('Seleccione una opcion valida')     
+             
+        input('Presione una tecla para continuar...')           
 
